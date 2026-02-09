@@ -443,14 +443,13 @@ function finalizeAnalysis() {
   // Trim last 5 seconds (stepping off)
   const originalCount = cycleData.length;
   cycleData = trimCycles(cycleData);
-  const trimmed = originalCount - cycleData.length;
 
   if (cycleData.length === 0) {
     setStatus("No valid pedal cycles after filtering. Try again.");
     return;
   }
 
-  if (trimmed > 0) {
+  if (cycleData.length < originalCount) {
     rebuildCharts(cycleData);
   }
 
@@ -459,8 +458,7 @@ function finalizeAnalysis() {
   updateGaugesFromAnalysis(results);
   showSnapshotGrid();
 
-  const trimNote = trimmed > 0 ? ` (${trimmed} cycles trimmed)` : "";
-  setStatus(`Analysis complete — ${cycleData.length} cycles analyzed${trimNote}`, "complete");
+  setStatus("Analysis complete", "complete");
 
   setTimeout(() => {
     document.getElementById("recommendations").scrollIntoView({ behavior: "smooth", block: "start" });
