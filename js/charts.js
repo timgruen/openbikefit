@@ -171,3 +171,37 @@ export function resetCharts() {
     chart.update();
   }
 }
+
+/**
+ * Update chart annotation bands when target ranges change.
+ * @param {Object} ranges - { knee: [min, max], hip: [min, max], ... }
+ */
+export function updateChartRanges(ranges) {
+  for (const [key, [targetMin, targetMax]] of Object.entries(ranges)) {
+    const config = CHART_CONFIGS[key];
+    if (!config) continue;
+    config.targetMin = targetMin;
+    config.targetMax = targetMax;
+
+    const chart = charts[key];
+    if (!chart) continue;
+
+    const ann = chart.options.plugins.annotation.annotations;
+    ann.redLow.yMax = targetMin - config.margin;
+    ann.yellowLow.yMin = targetMin - config.margin;
+    ann.yellowLow.yMax = targetMin;
+    ann.green.yMin = targetMin;
+    ann.green.yMax = targetMax;
+    ann.yellowHigh.yMin = targetMax;
+    ann.yellowHigh.yMax = targetMax + config.margin;
+    ann.redHigh.yMin = targetMax + config.margin;
+
+    // Recolor existing data points
+    const ds = chart.data.datasets[0];
+    ds.pointBackgroundColor = ds.data.map((v) =>
+      getPointColor(v, targetMin, targetMax, config.margin)
+    );
+
+    chart.update();
+  }
+}

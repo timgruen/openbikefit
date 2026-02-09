@@ -37,6 +37,19 @@ const THRESHOLDS = {
   },
 };
 
+/**
+ * Update threshold ranges (called when user changes settings).
+ * @param {Object} ranges - { knee: [min, max], hip: [min, max], ... }
+ */
+export function updateThresholds(ranges) {
+  for (const [key, [min, max]] of Object.entries(ranges)) {
+    if (THRESHOLDS[key]) {
+      THRESHOLDS[key].min = min;
+      THRESHOLDS[key].max = max;
+    }
+  }
+}
+
 const TRIM_END_MS = 5_000; // 5 seconds
 
 /**

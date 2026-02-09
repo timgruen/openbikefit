@@ -84,6 +84,165 @@ body {
   background: #475569;
 }
 
+/* Icon Buttons */
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--surface-2);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.icon-btn:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+/* Modals */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.modal-backdrop[hidden] {
+  display: none;
+}
+
+.modal {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--surface-2);
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 460px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.modal__close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px;
+}
+
+.modal__close:hover {
+  color: var(--text);
+}
+
+.modal__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.modal__subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.modal__steps {
+  padding-left: 20px;
+  margin-bottom: 16px;
+}
+
+.modal__steps li {
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.modal__note {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 20px;
+}
+
+.modal__action {
+  width: 100%;
+}
+
+.modal__actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.modal__actions .btn {
+  flex: 1;
+}
+
+/* Settings */
+.settings-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.settings-row__label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  min-width: 110px;
+}
+
+.settings-row__inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.settings-row__sep {
+  color: var(--text-muted);
+}
+
+.settings-row__unit {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.settings-input {
+  width: 70px;
+  padding: 6px 10px;
+  background: var(--bg);
+  border: 1px solid var(--surface-2);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: 0.9rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.settings-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
 /* Status Banner */
 .status-banner {
   text-align: center;

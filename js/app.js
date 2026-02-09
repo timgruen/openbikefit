@@ -1,14 +1,36 @@
 import { initPose, startDetection, stopDetection, getAspectRatio, setSide, setOverlayVisible, detectVisibleSide, captureSnapshot } from "./pose.js";
 import { computeAngles, getKneeLandmark } from "./angles.js";
 import { CadenceDetector } from "./cadence.js";
-import { initCharts, addDataPoint, resetCharts, rebuildCharts } from "./charts.js";
-import { analyzeSession, renderRecommendations, trimCycles } from "./analysis.js";
+import { initCharts, addDataPoint, resetCharts, rebuildCharts, updateChartRanges } from "./charts.js";
+import { analyzeSession, renderRecommendations, trimCycles, updateThresholds } from "./analysis.js";
+
+// --- Default Ranges ---
+const DEFAULT_RANGES = {
+  knee: [135, 150],
+  hip: [60, 80],
+  torso: [30, 55],
+  elbow: [145, 170],
+};
+
+const STORAGE_KEY = "openbikefit-ranges";
+
+function loadRanges() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch {}
+  return null;
+}
+
+function saveRanges(ranges) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(ranges));
+}
 
 // --- State ---
 const State = {
-  DETECTING: "DETECTING",   // Silent: looking for pedaling + auto-detecting side
-  RECORDING: "RECORDING",   // Side locked, overlay shown, recording data
-  COMPLETE: "COMPLETE",      // Results shown
+  DETECTING: "DETECTING",
+  RECORDING: "RECORDING",
+  COMPLETE: "COMPLETE",
 };
 
 let currentState = State.DETECTING;
@@ -46,12 +68,10 @@ const gauges = {
   elbow: document.getElementById("gauge-elbow"),
 };
 
-const TARGET_RANGES = {
-  knee: [135, 150],
-  hip: [60, 80],
-  torso: [30, 55],
-  elbow: [145, 170],
-};
+// Active target ranges (mutable — updated by settings)
+const TARGET_RANGES = Object.fromEntries(
+  Object.entries(DEFAULT_RANGES).map(([k, v]) => [k, [...v]])
+);
 
 const STATUS_COLORS = {
   green: "#22c55e",
@@ -66,9 +86,101 @@ function getAngleColor(key, value) {
   return STATUS_COLORS.red;
 }
 
+/**
+ * Apply target ranges to all subsystems: charts, analysis thresholds, gauge labels.
+ */
+function applyRanges(ranges) {
+  for (const key of Object.keys(TARGET_RANGES)) {
+    TARGET_RANGES[key] = ranges[key];
+  }
+  updateChartRanges(ranges);
+  updateThresholds(ranges);
+  // Update gauge labels
+  for (const [key, [min, max]] of Object.entries(ranges)) {
+    const gauge = gauges[key];
+    if (!gauge) continue;
+    gauge.querySelector(".gauge__range").textContent = `Target: ${min}\u00B0\u2013${max}\u00B0`;
+  }
+}
+
+// --- Welcome Modal ---
+const welcomeModal = document.getElementById("welcomeModal");
+const welcomeClose = document.getElementById("welcomeClose");
+const welcomeGotIt = document.getElementById("welcomeGotIt");
+
+function closeWelcome() {
+  welcomeModal.hidden = true;
+}
+
+welcomeClose.addEventListener("click", closeWelcome);
+welcomeGotIt.addEventListener("click", closeWelcome);
+welcomeModal.addEventListener("click", (e) => {
+  if (e.target === welcomeModal) closeWelcome();
+});
+
+document.getElementById("helpBtn").addEventListener("click", () => {
+  welcomeModal.hidden = false;
+});
+
+// --- Settings Modal ---
+const settingsModal = document.getElementById("settingsModal");
+const settingsInputs = {
+  knee: { min: document.getElementById("range-knee-min"), max: document.getElementById("range-knee-max") },
+  hip: { min: document.getElementById("range-hip-min"), max: document.getElementById("range-hip-max") },
+  torso: { min: document.getElementById("range-torso-min"), max: document.getElementById("range-torso-max") },
+  elbow: { min: document.getElementById("range-elbow-min"), max: document.getElementById("range-elbow-max") },
+};
+
+function populateSettingsInputs(ranges) {
+  for (const [key, [min, max]] of Object.entries(ranges)) {
+    settingsInputs[key].min.value = min;
+    settingsInputs[key].max.value = max;
+  }
+}
+
+function readSettingsInputs() {
+  const ranges = {};
+  for (const [key, inputs] of Object.entries(settingsInputs)) {
+    ranges[key] = [parseInt(inputs.min.value, 10), parseInt(inputs.max.value, 10)];
+  }
+  return ranges;
+}
+
+function openSettings() {
+  populateSettingsInputs(TARGET_RANGES);
+  settingsModal.hidden = false;
+}
+
+function closeSettings() {
+  settingsModal.hidden = true;
+}
+
+document.getElementById("settingsBtn").addEventListener("click", openSettings);
+document.getElementById("settingsClose").addEventListener("click", closeSettings);
+settingsModal.addEventListener("click", (e) => {
+  if (e.target === settingsModal) closeSettings();
+});
+
+document.getElementById("settingsSave").addEventListener("click", () => {
+  const ranges = readSettingsInputs();
+  saveRanges(ranges);
+  applyRanges(ranges);
+  closeSettings();
+});
+
+document.getElementById("settingsReset").addEventListener("click", () => {
+  populateSettingsInputs(DEFAULT_RANGES);
+});
+
 // --- Init ---
 async function init() {
   initCharts();
+
+  // Load saved ranges (if any) and apply
+  const saved = loadRanges();
+  if (saved) {
+    applyRanges(saved);
+  }
 
   try {
     setStatus("Loading pose model...");
