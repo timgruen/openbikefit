@@ -176,11 +176,9 @@ document.getElementById("settingsReset").addEventListener("click", () => {
 async function init() {
   initCharts();
 
-  // Load saved ranges (if any) and apply
+  // Load saved ranges or use defaults, then apply everywhere to stay in sync
   const saved = loadRanges();
-  if (saved) {
-    applyRanges(saved);
-  }
+  applyRanges(saved || DEFAULT_RANGES);
 
   try {
     setStatus("Loading pose model...");
