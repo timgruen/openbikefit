@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bike Fit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <h1 class="header__title">Bike Fit</h1>
+    <div class="header__controls">
+      <button id="stopBtn" class="btn btn--primary" hidden>Stop</button>
+      <button id="resetBtn" class="btn btn--secondary" hidden>Reset</button>
+    </div>
+  </header>
+
+  <!-- Status Banner -->
+  <div id="statusBanner" class="status-banner">
+    <span id="statusText">Waiting for camera...</span>
+  </div>
+
+  <!-- Video Section -->
+  <section class="video-section">
+    <div class="video-container">
+      <video id="webcam" autoplay playsinline></video>
+      <canvas id="overlay"></canvas>
+    </div>
+  </section>
+
+  <!-- Live Angle Gauges -->
+  <section class="gauges-section">
+    <div class="gauge" id="gauge-knee">
+      <div class="gauge__label">Knee</div>
+      <div class="gauge__value">--°</div>
+      <div class="gauge__range">Target: 135°–150°</div>
+    </div>
+    <div class="gauge" id="gauge-hip">
+      <div class="gauge__label">Hip</div>
+      <div class="gauge__value">--°</div>
+      <div class="gauge__range">Target: 60°–80°</div>
+    </div>
+    <div class="gauge" id="gauge-torso">
+      <div class="gauge__label">Torso</div>
+      <div class="gauge__value">--°</div>
+      <div class="gauge__range">Target: 30°–55°</div>
+    </div>
+    <div class="gauge" id="gauge-elbow">
+      <div class="gauge__label">Elbow</div>
+      <div class="gauge__value">--°</div>
+      <div class="gauge__range">Target: 145°–170°</div>
+    </div>
+  </section>
+
+  <!-- Time-Series Charts -->
+  <section class="charts-section">
+    <div class="chart-container">
+      <h3>Knee Angle (at BDC)</h3>
+      <canvas id="chart-knee"></canvas>
+    </div>
+    <div class="chart-container">
+      <h3>Hip Angle (at TDC)</h3>
+      <canvas id="chart-hip"></canvas>
+    </div>
+    <div class="chart-container">
+      <h3>Torso Angle</h3>
+      <canvas id="chart-torso"></canvas>
+    </div>
+    <div class="chart-container">
+      <h3>Elbow Angle</h3>
+      <canvas id="chart-elbow"></canvas>
+    </div>
+  </section>
+
+  <!-- Recommendations Panel -->
+  <section id="recommendations" class="recommendations-section" hidden>
+    <h2>Fit Recommendations</h2>
+    <div id="recommendationCards" class="recommendation-cards"></div>
+  </section>
+
+  <!-- CDN Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

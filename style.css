@@ -1,0 +1,368 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --green: #22c55e;
+  --yellow: #eab308;
+  --red: #ef4444;
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface-2: #334155;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --radius: 8px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--surface-2);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.header__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.header__controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 8px 20px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  background: var(--accent);
+  color: white;
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--accent-hover);
+}
+
+.btn--secondary {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  background: #475569;
+}
+
+/* Status Banner */
+.status-banner {
+  text-align: center;
+  padding: 10px 24px;
+  background: var(--surface);
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--surface-2);
+}
+
+.status-banner--recording {
+  color: var(--green);
+  font-weight: 600;
+}
+
+.status-banner--complete {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Video Section */
+.video-section {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  aspect-ratio: 16/9;
+  background: #000;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.video-container video,
+.video-container canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.video-container canvas {
+  pointer-events: none;
+}
+
+/* Gauges */
+.gauges-section {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  padding: 0 24px 20px;
+  flex-wrap: wrap;
+}
+
+.gauge {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 16px 24px;
+  text-align: center;
+  min-width: 140px;
+  border: 2px solid var(--surface-2);
+  transition: border-color 0.2s;
+}
+
+.gauge--green {
+  border-color: var(--green);
+}
+
+.gauge--yellow {
+  border-color: var(--yellow);
+}
+
+.gauge--red {
+  border-color: var(--red);
+}
+
+.gauge__label {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.gauge__value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.gauge__range {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Charts */
+.charts-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 0 24px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.chart-container {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.chart-container h3 {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.chart-container canvas {
+  width: 100% !important;
+}
+
+/* Recommendations */
+.recommendations-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+}
+
+.recommendations-section h2 {
+  font-size: 1.3rem;
+  margin-bottom: 16px;
+}
+
+.recommendation-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.rec-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 20px;
+  border-left: 4px solid var(--surface-2);
+}
+
+.rec-card--green {
+  border-left-color: var(--green);
+}
+
+.rec-card--yellow {
+  border-left-color: var(--yellow);
+}
+
+.rec-card--red {
+  border-left-color: var(--red);
+}
+
+.rec-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.rec-card__name {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.rec-card__badges {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.rec-card__category {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.rec-card__category--injury {
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+}
+
+.rec-card__category--comfort {
+  background: rgba(59, 130, 246, 0.1);
+  color: #60a5fa;
+}
+
+.rec-card__category--mixed {
+  background: rgba(168, 85, 247, 0.1);
+  color: #a78bfa;
+}
+
+.rec-card__badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.rec-card__badge--green {
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--green);
+}
+
+.rec-card__badge--yellow {
+  background: rgba(234, 179, 8, 0.15);
+  color: var(--yellow);
+}
+
+.rec-card__badge--red {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--red);
+}
+
+.rec-card__stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 6px;
+  font-size: 0.9rem;
+}
+
+.rec-card__avg strong {
+  font-variant-numeric: tabular-nums;
+}
+
+.rec-card__target-range {
+  color: var(--text-muted);
+}
+
+.rec-card__detail {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.rec-card__suggestion {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  padding-top: 10px;
+  border-top: 1px solid var(--surface-2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .charts-section,
+  .recommendation-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .gauges-section {
+    gap: 8px;
+  }
+
+  .gauge {
+    min-width: 100px;
+    padding: 12px 16px;
+  }
+
+  .gauge__value {
+    font-size: 1.4rem;
+  }
+}
