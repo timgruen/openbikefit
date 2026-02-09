@@ -2,8 +2,8 @@ const THRESHOLDS = {
   knee: {
     name: "Knee (at BDC)",
     category: "Injury risk",
-    min: 135,
-    max: 150,
+    min: 130,
+    max: 145,
     lowSuggestion: "Your knee is bending too much under load at the bottom of the pedal stroke. This places excessive stress on the patellar tendon and can lead to anterior knee pain over time. Raise your saddle in small increments (5 mm at a time) until this angle increases into the target range.",
     highSuggestion: "Your leg is overextending at the bottom of the pedal stroke. This can strain the hamstrings and IT band, and may cause your hips to rock side to side to reach the pedals. Lower your saddle in small increments (5 mm at a time) until this angle decreases into the target range.",
     goodSuggestion: "Knee extension is in a healthy range. Your saddle height is well-set — no changes needed.",
@@ -11,8 +11,8 @@ const THRESHOLDS = {
   hip: {
     name: "Hip (at TDC)",
     category: "Injury risk",
-    min: 60,
-    max: 80,
+    min: 45,
+    max: 60,
     lowSuggestion: "Your hip is closing too tightly at the top of the pedal stroke. Over time, this can lead to hip impingement, lower-back pain, and restricted breathing. Consider raising your handlebars, using a shorter stem, or moving the saddle back slightly to open up this angle.",
     highSuggestion: "Your hip angle is unusually open at the top of the stroke, which may indicate the saddle is too far back or too low relative to the handlebars. Check your saddle fore/aft position — you may need to slide it forward slightly.",
     goodSuggestion: "Hip closure is in a comfortable, sustainable range. No risk of impingement or back strain from this angle.",

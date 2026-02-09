@@ -6,8 +6,8 @@ import { analyzeSession, renderRecommendations, trimCycles, updateThresholds } f
 
 // --- Default Ranges ---
 const DEFAULT_RANGES = {
-  knee: [135, 150],
-  hip: [60, 80],
+  knee: [130, 145],
+  hip: [45, 60],
   torso: [30, 55],
   elbow: [145, 170],
 };

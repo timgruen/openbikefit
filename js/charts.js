@@ -1,6 +1,6 @@
 const CHART_CONFIGS = {
-  knee: { label: "Knee Angle (°)", min: 100, max: 180, targetMin: 135, targetMax: 150, margin: 10 },
-  hip: { label: "Hip Angle (°)", min: 40, max: 120, targetMin: 60, targetMax: 80, margin: 10 },
+  knee: { label: "Knee Angle (°)", min: 100, max: 180, targetMin: 130, targetMax: 145, margin: 10 },
+  hip: { label: "Hip Angle (°)", min: 20, max: 100, targetMin: 45, targetMax: 60, margin: 10 },
   torso: { label: "Torso Angle (°)", min: 10, max: 80, targetMin: 30, targetMax: 55, margin: 10 },
   elbow: { label: "Elbow Angle (°)", min: 100, max: 180, targetMin: 145, targetMax: 170, margin: 10 },
 };
